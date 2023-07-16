@@ -15,3 +15,9 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 # cinema_tracker
+
+
+# Dev
+
+1. Copy .env.template and rename to .env
+2. Chamge the viraible enviroment (The MovieDB)
