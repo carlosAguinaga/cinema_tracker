@@ -1,4 +1,6 @@
+import 'package:cinema_tracker/config/constans/environment.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomeScreem extends StatelessWidget {
   static const name = 'home-screen';
@@ -6,8 +8,10 @@ class HomeScreem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Placeholder(),
+    return Scaffold(
+      body: Center(
+        child: Text(Environment.theMovieDbKey),
+      ),
     );
   }
 }
