@@ -20,4 +20,4 @@ samples, guidance on mobile development, and a full API reference.
 # Dev
 
 1. Copy .env.template and rename to .env
-2. Chamge the viraible enviroment (The MovieDB)
+2. Chamge the viraible environment (The MovieDB)
