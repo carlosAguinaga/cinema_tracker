@@ -1,7 +1,6 @@
-import 'package:cinema_tracker/config/constans/environment.dart';
-import 'package:cinema_tracker/presentation/providers/movies/movies_providers.dart';
+import 'package:cinema_tracker/presentation/providers/providers.dart';
+import 'package:cinema_tracker/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreem extends StatelessWidget {
@@ -11,9 +10,8 @@ class HomeScreem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: _HomeView(),
-      ),
+      body: _HomeView(),
+      bottomNavigationBar: CustomBottomNavigation(),
     );
   }
 }
@@ -29,22 +27,75 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   @override
   void initState() {
     super.initState();
-
     ref.read(nowPlayeingMoviesProvider.notifier).loadNextPage();
+    ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(upcominMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
-    final nowPlayingMovies = ref.watch(nowPlayeingMoviesProvider);
+    final initialLoading = ref.watch(initialLoadingProvider);
+    if (initialLoading) return const FullScreenLoader();
 
-    return ListView.builder(
-      itemCount: nowPlayingMovies.length,
-      itemBuilder: (context, index) {
-        final movie = nowPlayingMovies[index];
-        return ListTile(
-          title: Text(movie.title),
-        );
-      },
+    final slideshowMovies = ref.watch(movieSlideshowProvider);
+    final nowPlayingMovies = ref.watch(nowPlayeingMoviesProvider);
+    final popularMovies = ref.watch(popularMoviesProvider);
+    final upcominMovies = ref.watch(upcominMoviesProvider);
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
+
+    return CustomScrollView(
+      slivers: [
+        const SliverAppBar(
+          floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            title: CustomAppbar(),
+            titlePadding: EdgeInsets.zero,
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            childCount: 1,
+            (context, index) {
+              return Column(
+                children: [
+                  MoviesSlideshow(movies: slideshowMovies),
+                  MovieHorizontalLisview(
+                    movies: nowPlayingMovies,
+                    title: 'En cines',
+                    subTitle: 'Lunes 20',
+                    loadNextPage: () => ref
+                        .read(nowPlayeingMoviesProvider.notifier)
+                        .loadNextPage(),
+                  ),
+                  MovieHorizontalLisview(
+                    movies: upcominMovies,
+                    title: 'Upcomin',
+                    // subTitle: 'Lunes 20',
+                    loadNextPage: () =>
+                        ref.read(upcominMoviesProvider.notifier).loadNextPage(),
+                  ),
+                  MovieHorizontalLisview(
+                    movies: popularMovies,
+                    title: 'Populars',
+                    // subTitle: 'mates 13',
+                    loadNextPage: () =>
+                        ref.read(popularMoviesProvider.notifier).loadNextPage(),
+                  ),
+                  MovieHorizontalLisview(
+                    movies: topRatedMovies,
+                    title: 'Top Rated',
+                    loadNextPage: () => ref
+                        .read(topRatedMoviesProvider.notifier)
+                        .loadNextPage(),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
