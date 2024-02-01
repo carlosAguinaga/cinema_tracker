@@ -27,7 +27,6 @@ class HomeViewState extends ConsumerState<HomeView> {
 
     final slideshowMovies = ref.watch(movieSlideshowProvider);
     final nowPlayingMovies = ref.watch(nowPlayeingMoviesProvider);
-    final popularMovies = ref.watch(popularMoviesProvider);
     final upcominMovies = ref.watch(upcominMoviesProvider);
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
 
