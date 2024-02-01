@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class FavoritesView extends ConsumerStatefulWidget {
-  const FavoritesView({super.key});
+class PopularView extends ConsumerStatefulWidget {
+  const PopularView({super.key});
 
   @override
-  FavoritesViewState createState() => FavoritesViewState();
+  PopularViewState createState() => PopularViewState();
 }
 
-class FavoritesViewState extends ConsumerState<FavoritesView> {
+class PopularViewState extends ConsumerState<PopularView> {
   bool isLastPage = false;
   bool isLoading = false;
 
@@ -23,20 +23,19 @@ class FavoritesViewState extends ConsumerState<FavoritesView> {
 
   void loadNextPage() async {
     if (isLoading || isLastPage) return;
-    final movies =
-        await ref.read(favoriteMoviesProvider.notifier).loadNexPage();
+    await ref.read(popularMoviesProvider.notifier).loadNextPage();
     isLoading = false;
 
-    if (movies.isEmpty) {
-      isLastPage = true;
-    }
+    // if (movies.isEmpty) {
+    //   isLastPage = true;
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    final favoriteMovies = ref.watch(favoriteMoviesProvider).values.toList();
+    final popularMovies = ref.watch(popularMoviesProvider);
 
-    if (favoriteMovies.isEmpty) {
+    if (popularMovies.isEmpty) {
       final colors = Theme.of(context).colorScheme;
       return Center(
         child: Column(
@@ -60,7 +59,7 @@ class FavoritesViewState extends ConsumerState<FavoritesView> {
 
     return Scaffold(
       body: MovieMasonry(
-        movies: favoriteMovies,
+        movies: popularMovies,
         loadNextPage: loadNextPage,
       ),
     );

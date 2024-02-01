@@ -21,3 +21,8 @@ samples, guidance on mobile development, and a full API reference.
 
 1. Copy .env.template and rename to .env
 2. Chamge the viraible environment (The MovieDB)
+
+3. Changes in the entity, the command must be executed
+```
+flutter pub run build_runner build
+```

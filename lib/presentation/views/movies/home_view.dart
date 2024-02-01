@@ -49,8 +49,9 @@ class HomeViewState extends ConsumerState<HomeView> {
                   MoviesSlideshow(movies: slideshowMovies),
                   MovieHorizontalLisview(
                     movies: nowPlayingMovies,
-                    title: 'En cines',
-                    subTitle: 'Lunes 20',
+                    title: 'In theaters',
+                    // subTitle: ''
+                    // subTitle: 'Lunes 20',
                     loadNextPage: () => ref
                         .read(nowPlayeingMoviesProvider.notifier)
                         .loadNextPage(),
@@ -62,13 +63,14 @@ class HomeViewState extends ConsumerState<HomeView> {
                     loadNextPage: () =>
                         ref.read(upcominMoviesProvider.notifier).loadNextPage(),
                   ),
-                  MovieHorizontalLisview(
-                    movies: popularMovies,
-                    title: 'Populars',
-                    // subTitle: 'mates 13',
-                    loadNextPage: () =>
-                        ref.read(popularMoviesProvider.notifier).loadNextPage(),
-                  ),
+                  // MovieHorizontalLisview(
+                  //   movies: popularMovies,
+                  //   title: 'Populars',
+                  //   // subTitle: 'mates 13',
+                  //   loadNextPage: () =>
+                  //       ref.read(popularMoviesProvider.notifier).loadNextPage(),
+                  // ),
+
                   MovieHorizontalLisview(
                     movies: topRatedMovies,
                     title: 'Top Rated',
