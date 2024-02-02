@@ -1,4 +1,4 @@
-package com.example.cinema_tracker
+package com.hartas.cinema_tracker
 
 import io.flutter.embedding.android.FlutterActivity
 
